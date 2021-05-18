@@ -1,0 +1,45 @@
+// mat-sidenav-container {
+//   min-height: 100%;
+// }
+
+// mat-sidenav {
+//   max-height: 100vh;
+// }
+
+mat-toolbar {
+  position:fixed;
+}
+
+main {
+  padding-top: 80px;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 12px;
+
+  @media only screen and (min-width: 600px) {
+    width:95%;
+    margin:auto;
+  }
+
+  @media only screen and (min-width: 960px) {
+    width:90%;
+    margin:auto;
+  }
+
+  @media only screen and (min-width: 1350px) {
+    width:1280px;
+    margin:auto;
+  }
+
+
+}
+
+mat-sidenav-container {
+  height: 100%;
+
+  mat-sidenav {
+    width: 200px;
+  }
+
+}
+
