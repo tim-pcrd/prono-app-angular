@@ -21,9 +21,7 @@ export class CreateTeamComponent implements OnInit {
   }
 
   private createTeamForm() {
-
     this.groups = Group;
-
     this.teamForm = new FormGroup({
       name: new FormControl('', Validators.required),
       group: new FormControl('', Validators.required),

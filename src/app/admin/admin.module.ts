@@ -8,7 +8,28 @@ import { AdminRoutingModule } from './admin-routing.module';
 
 import { CreateTeamComponent } from './teams/create-team/create-team.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CreateMatchComponent } from './matches/create-match/create-match.component';
+import {
+  NgxMatDateFormats,
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+  NGX_MAT_DATE_FORMATS
+} from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
+const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
+  parse: {
+    dateInput: "l, LTS"
+  },
+  display: {
+    dateInput: "DD/MM/YYYY, HH:mm",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "LL",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
 
 
 @NgModule({
@@ -17,12 +38,22 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     TeamsComponent,
     MatchesComponent,
     CreateTeamComponent,
+    CreateMatchComponent,
 
   ],
   imports: [
     SharedModule,
     AdminRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    NgxMatMomentModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS}
   ]
+
 })
 export class AdminModule { }

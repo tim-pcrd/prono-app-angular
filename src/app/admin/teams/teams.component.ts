@@ -17,7 +17,6 @@ export class TeamsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      console.log(data.teams);
       this.teams = data.teams as ITeam[];
     });
   }

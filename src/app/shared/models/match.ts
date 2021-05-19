@@ -9,9 +9,9 @@ export interface IMatch {
 }
 
 export enum Stage {
-  Group = 1,
-  Last16 = 2,
-  QuarterFinal = 3,
-  SemiFinal = 4,
-  Final = 5
+  'Groep' = 1,
+  'Achtste finale' = 2,
+  'Kwartfinale' = 3,
+  'Halve finale' = 4,
+  'Finale' = 5
 }
