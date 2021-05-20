@@ -1,11 +1,15 @@
+import { ITeam } from "./team";
+
 export interface IMatch {
   id?: string;
   date: Date;
   homeTeamId: string;
+  homeTeam?: ITeam;
   awayTeamId: string;
+  awayTeam?: ITeam;
   homeTeamScore?: number;
   awayTeamScore?: number;
-  stage: Stage;
+  stage: string;
 }
 
 export enum Stage {

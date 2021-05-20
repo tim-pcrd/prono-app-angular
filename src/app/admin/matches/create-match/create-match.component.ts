@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Stage } from 'src/app/shared/models/match';
 import { ITeam } from 'src/app/shared/models/team';
+import { AdminService } from '../../admin.service';
+
 
 @Component({
   selector: 'app-create-match',
@@ -14,7 +16,7 @@ export class CreateMatchComponent implements OnInit {
   stages = Stage;
   teamsByGroup: any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
@@ -33,26 +35,28 @@ export class CreateMatchComponent implements OnInit {
     this.matchForm = new FormGroup({
       date: new FormControl('', Validators.required),
       stage: new FormControl('', Validators.required),
-      homeTeam: new FormControl('', Validators.required),
-      awayTeam: new FormControl('', Validators.required)
+      homeTeamId: new FormControl('', Validators.required),
+      awayTeamId: new FormControl('', Validators.required)
     });
   }
 
   private teamsGrouping(teams: ITeam[]) {
     this.teamsByGroup = teams.reduce((acc, value) => {
-      if (!acc[value.group]) {
-        acc[value.group] = []
-      }
+      if (!acc[value.group]) { acc[value.group] = [] }
 
       acc[value.group].push(value);
       return acc;
     }, {})
-
     console.log(this.teamsByGroup);
   }
 
   submit() {
     console.log(this.matchForm.value);
+    if (this.matchForm.valid) {
+      const matchToCreate = {...this.matchForm.value, date: this.matchForm.value.date.toDate()}
+      // this.adminService.createMatch(matchToCreate);
+    }
+
   }
 
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import localeNl from '@angular/common/locales/nl-BE';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localeNl);
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FlexLayoutModule,
     NgxSpinnerModule
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'nl-BE'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

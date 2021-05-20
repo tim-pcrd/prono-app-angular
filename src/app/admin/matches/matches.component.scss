@@ -1,0 +1,31 @@
+table {
+    width: 100%;
+    margin:auto;
+
+    @media only screen and (min-width: 600px) {
+      width:80%;
+      margin:auto;
+    }
+
+    @media only screen and (min-width: 960px) {
+      width: 800px;
+      margin:auto;
+    }
+
+
+
+  }
+
+  mat-card-header {
+    margin-bottom: 1rem;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x:auto;
+  }
+
+  td{
+    white-space: nowrap;
+    padding-right: 16px!important;
+  }

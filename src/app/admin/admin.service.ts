@@ -3,9 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, skip, take, tap } from 'rxjs/operators';
+import { filter, map, skip, take, tap } from 'rxjs/operators';
 import { IMatch } from '../shared/models/match';
 import { Group, ITeam } from '../shared/models/team';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +31,22 @@ export class AdminService {
       .catch(error => console.log(error));
   }
 
+  getTeamById(id: string) {
+    if (this.teams.length === 0){
+
+      return this.getTeamsFromDb().toPromise();
+    }
+
+    return {...this.teams.find(x => x.id === id)};
+  }
+
   getAllTeams() : Observable<ITeam[]> {
     if (this.teams.length === 0){
+
       return this.getTeamsFromDb();
     }
+
+    console.log(this.teams);
 
     return of([...this.teams]);
   }
@@ -43,10 +56,10 @@ export class AdminService {
     .pipe(
       take(1),
       map((teams: any[]) => {
-        this.teams = teams.map(team => ({...team, group: Group[team.group]}))
+        this.teams = _.orderBy(teams.map(team => ({...team, group: Group[team.group]})), ['group', 'name']);
         console.log(this.teams);
         this.teamListener();
-        return this.teams;
+        return [...this.teams];
       })
     );
   }
@@ -60,7 +73,7 @@ export class AdminService {
       .subscribe(actions => actions.forEach(x => {
         const id = x.payload.doc.id;
         const data = x.payload.doc.data() as any;
-        const team = {...data, group: Group[data.group], id} as ITeam;
+        const team = {...data, id} as ITeam;
 
         if (x.type === 'added') {
           this.teams = [...this.teams, team];
@@ -72,17 +85,42 @@ export class AdminService {
             this.teams[teamIndex] = team;
           }
         }
+        this.teams = _.orderBy([...this.teams], ['group', 'name']) ;
       }));
   }
 
   createMatch(match: IMatch) {
-    this.fireStore.collection('teams').add(match)
-      .then()
-      .catch();
+    this.fireStore.collection('matches').add(match)
+      .then(x => {
+        this.router.navigateByUrl('/admin/wedstrijden')
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  editMatch(match: IMatch) {
+    const {id, ...matchToUpdate} = match;
+    console.log(id);
+    this.fireStore.collection('matches').doc(id).update(matchToUpdate)
+      .then(x => {
+        console.log(x);
+        this.router.navigateByUrl('/admin/wedstrijden');
+      })
+      .catch(error => console.log(error));
+  }
+
+  getMatchById(id: string): Observable<IMatch> {
+    return this.getAllMatches().pipe(
+      map(matches => {
+        return {...matches.find(x => x.id === id)}
+      })
+    );
   }
 
   getAllMatches(): Observable<IMatch[]> {
     if(this.matches.length > 0) {
+      console.log(this.matches);
       return of([...this.matches])
     }
 
@@ -96,7 +134,8 @@ export class AdminService {
         tap(x => console.log(x)),
         map(matches => {
           this.matchListener();
-          return matches as IMatch[];
+          this.matches = _.orderBy(matches.map((match:any) => ({...match, date: match.date.toDate()})), ['date']);
+          return [...this.matches];
         })
       );
   }
@@ -110,7 +149,7 @@ export class AdminService {
       .subscribe(actions => actions.forEach(x => {
         const id = x.payload.doc.id;
         const data = x.payload.doc.data() as any;
-        const match = {...data, group: Group[data.group], id} as IMatch;
+        const match = {...data, id, date: data.date.toDate()} as IMatch;
 
         if (x.type === 'added') {
           this.matches = [...this.matches, match];
@@ -122,6 +161,7 @@ export class AdminService {
             this.matches[matchIndex] = match;
           }
         }
+        this.matches = _.orderBy([...this.matches], ['date']);
       }));
   }
 
