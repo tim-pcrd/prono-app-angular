@@ -6,6 +6,7 @@
 //   max-height: 100vh;
 // }
 
+
 mat-toolbar {
   position:fixed;
   z-index: 1000;
@@ -39,8 +40,19 @@ mat-sidenav-container {
   height: 100%;
 
   mat-sidenav {
-    width: 200px;
+    width: 250px;
   }
 
+}
+
+mat-nav-list {
+  a span {
+    margin-left:6px;
+    padding-top: 4px;
+  }
+}
+
+.active {
+  background-color: rgb(77, 75, 75);
 }
 

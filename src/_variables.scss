@@ -1,0 +1,4 @@
+@import '~@angular/material/theming';
+
+$app-primary: mat-palette($mat-blue);
+$primary: mat-color($app-primary);

@@ -7,6 +7,7 @@ import { IMatch, Stage } from 'src/app/shared/models/match';
 import { ITeam } from 'src/app/shared/models/team';
 import { AdminService } from '../../admin.service';
 import * as moment from 'moment';
+import { MatchService } from '../match.service';
 
 @Component({
   selector: 'app-edit-match',
@@ -20,7 +21,7 @@ export class EditMatchComponent implements OnInit {
   stages = Stage;
   teamsByGroup: any;
 
-  constructor(private route: ActivatedRoute, private adminService: AdminService) { }
+  constructor(private route: ActivatedRoute, private matchService: MatchService) { }
 
   ngOnInit(): void {
     combineLatest([
@@ -31,7 +32,7 @@ export class EditMatchComponent implements OnInit {
       switchMap(([data, params]) => {
         this.teamsGrouping(data.teams as ITeam[]);
         this.matchId = params.get('id');
-        return this.adminService.getMatchById(this.matchId);
+        return this.matchService.getMatchById(this.matchId);
       })
     )
     .subscribe(match => {
@@ -70,7 +71,7 @@ export class EditMatchComponent implements OnInit {
   submit() {
     if (this.matchForm.valid) {
       const matchToCreate = {...this.matchForm.value, date: this.matchForm.value.date.toDate(), id: this.matchId}
-      this.adminService.editMatch(matchToCreate);
+      this.matchService.editMatch(matchToCreate);
     }
 
   }

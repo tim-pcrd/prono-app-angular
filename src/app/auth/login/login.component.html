@@ -1,1 +1,37 @@
-<p>login works!</p>
+<mat-card>
+  <mat-card-header fxLayoutAlign="center">
+    <mat-card-title>Inloggen</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" fxLayout fxLayoutAlign="center">
+      <div fxLayout="column" fxLayoutGap="12px" fxFlex="100%" fxFlex.gt-xs="520px">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="loginForm.controls.email.errors?.required">Verplicht veld</mat-error>
+          <mat-error *ngIf="loginForm.controls.email.errors?.pattern">Geen geldig e-mailadres</mat-error>
+        </mat-form-field>
+        <div fxLayout="column" style="position: relative;">
+          <mat-form-field appearance="outline">
+            <mat-label>Wachtwoord</mat-label>
+            <input type="password" #password matInput formControlName="password">
+            <mat-icon matSuffix>password</mat-icon>
+            <mat-error *ngIf="loginForm.controls.password.errors?.required">Verplicht veld</mat-error>
+            <mat-error *ngIf="loginForm.controls.password.errors?.minlength">Wachtwoord moet uit minstens 8 karakters bestaan</mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+
+        <button mat-raised-button color="primary" type="submit">Inloggen</button>
+
+        <a fxFlexAlign="center" (click)="openForgotPassword()">Wachtwoord vergeten?</a>
+        <a fxFlexAlign="center" routerLink="/auth/registreer">Nog geen account? Registeer hier</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+

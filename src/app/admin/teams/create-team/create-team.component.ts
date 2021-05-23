@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Group } from 'src/app/shared/models/team';
 import { AdminService } from '../../admin.service';
+import { TeamService } from '../team.service';
 
 @Component({
   selector: 'app-create-team',
@@ -14,7 +15,7 @@ export class CreateTeamComponent implements OnInit {
   groups;
   imgURL: any;
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private teamService: TeamService, private router: Router) { }
 
   ngOnInit(): void {
     this.createTeamForm();
@@ -49,7 +50,7 @@ export class CreateTeamComponent implements OnInit {
   submit(){
     if (this.teamForm.valid) {
       const {file, ...team} = this.teamForm.value;
-      this.adminService.createTeam(team, file);
+      this.teamService.createTeam(team, file);
     }
   }
 }

@@ -1,8 +1,7 @@
 export interface IUser {
-  id?: string;
-  uid?: string;
+  id: string;
   displayName: string;
-  roles: IRoles;
+  roles?: IRoles;
 }
 
 export interface IRoles {

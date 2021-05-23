@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Stage } from 'src/app/shared/models/match';
 import { ITeam } from 'src/app/shared/models/team';
 import { AdminService } from '../../admin.service';
+import { MatchService } from '../match.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class CreateMatchComponent implements OnInit {
   stages = Stage;
   teamsByGroup: any;
 
-  constructor(private route: ActivatedRoute, private adminService: AdminService) { }
+  constructor(private route: ActivatedRoute, private matchService: MatchService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
@@ -54,7 +55,7 @@ export class CreateMatchComponent implements OnInit {
     console.log(this.matchForm.value);
     if (this.matchForm.valid) {
       const matchToCreate = {...this.matchForm.value, date: this.matchForm.value.date.toDate()}
-      // this.adminService.createMatch(matchToCreate);
+      this.matchService.createMatch(matchToCreate);
     }
 
   }

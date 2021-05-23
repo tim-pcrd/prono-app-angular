@@ -45,7 +45,7 @@
       <ng-container matColumnDef="score">
         <th mat-header-cell *matHeaderCellDef>Score</th>
         <td mat-cell *matCellDef="let element">
-          <div fxLayout *ngIf="element.homeTeamScore && element.awayTeamScore">
+          <div fxLayout *ngIf="(element.homeTeamScore != null) && (element.awayTeamScore != null)">
             <span>{{element.homeTeamScore}} - {{element.awayTeamScore}}</span>
           </div>
         </td>

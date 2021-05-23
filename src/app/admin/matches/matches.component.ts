@@ -20,7 +20,7 @@ export class MatchesComponent implements OnInit {
 
     console.log(matches);
 
-    this.matchesWithTeams = [...matches].map((match: IMatch) => {
+    this.matchesWithTeams = matches.map((match: IMatch) => {
       const homeTeam = teams.find(x => x.id === match.homeTeamId);
       const awayTeam = teams.find(x => x.id === match.awayTeamId);
       return {...match, homeTeam, awayTeam, stage: Stage[match.stage]}

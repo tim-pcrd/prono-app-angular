@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 
 import { CreateTeamComponent } from './teams/create-team/create-team.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { CreateMatchComponent } from './matches/create-match/create-match.component';
 import {
   NgxMatDateFormats,
@@ -46,7 +45,6 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   imports: [
     SharedModule,
     AdminRoutingModule,
-    FlexLayoutModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,

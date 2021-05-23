@@ -1,0 +1,26 @@
+@import "../../../variables";
+
+mat-card{
+  margin-top: 3rem;
+  padding-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    margin-top:0.5rem;
+    cursor:pointer;
+    font-size: 0.8rem;
+
+
+    &:visited {
+      color:white;
+    }
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+mat-card-header{
+  margin-bottom: 1rem;
+}
