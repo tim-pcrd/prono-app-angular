@@ -17,6 +17,11 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'prono',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./prono/prono.module').then(m => m.PronoModule)
   }
 ];
 

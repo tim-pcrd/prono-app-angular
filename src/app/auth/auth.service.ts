@@ -89,6 +89,19 @@ export class AuthService {
       })
   }
 
+  confirmPasswordReset(password: string, code: string) {
+    this.afAuth.confirmPasswordReset(code, password)
+      .then(x => {
+        console.log(x);
+        this.router.navigateByUrl('/auth/login');
+        this.toastrService.success('Je wachtwoord is succesvol gewijzigd.')
+      })
+      .catch(error => {
+        console.log(error);
+        this.errorHandling(error);
+      })
+  }
+
 
   private createUser(uid: string, displayName: string) {
     return this.fireStore.collection('users').doc(uid).set({id: uid, displayName, displayName_lowercase: displayName.toLowerCase()})

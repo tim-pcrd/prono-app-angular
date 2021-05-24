@@ -12,17 +12,14 @@
           <mat-error *ngIf="loginForm.controls.email.errors?.required">Verplicht veld</mat-error>
           <mat-error *ngIf="loginForm.controls.email.errors?.pattern">Geen geldig e-mailadres</mat-error>
         </mat-form-field>
-        <div fxLayout="column" style="position: relative;">
-          <mat-form-field appearance="outline">
-            <mat-label>Wachtwoord</mat-label>
-            <input type="password" #password matInput formControlName="password">
-            <mat-icon matSuffix>password</mat-icon>
-            <mat-error *ngIf="loginForm.controls.password.errors?.required">Verplicht veld</mat-error>
-            <mat-error *ngIf="loginForm.controls.password.errors?.minlength">Wachtwoord moet uit minstens 8 karakters bestaan</mat-error>
+        <mat-form-field appearance="outline">
+          <mat-label>Wachtwoord</mat-label>
+          <input type="password" #password matInput formControlName="password">
+          <mat-icon matSuffix>password</mat-icon>
+          <mat-error *ngIf="loginForm.controls.password.errors?.required">Verplicht veld</mat-error>
+          <mat-error *ngIf="loginForm.controls.password.errors?.minlength">Wachtwoord moet uit minstens 8 karakters bestaan</mat-error>
+        </mat-form-field>
 
-          </mat-form-field>
-
-        </div>
 
 
 

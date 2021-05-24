@@ -1,6 +1,5 @@
 table {
-    width: 100%;
-    margin:auto;
+
 
     // @media only screen and (min-width: 600px) {
     //   width:80%;
@@ -12,20 +11,23 @@ table {
     //   margin:auto;
     // }
 
+    width: 100%;
+    margin:auto;
 
+    td{
+      padding:16px 8px;
+    }
+
+    th{
+      padding-left:8px;
+    }
+
+    tr:hover {
+      background: rgb(77, 77, 77);
+    }
 
   }
 
   mat-card-header {
     margin-bottom: 1rem;
-  }
-
-  .table-wrapper {
-    width: 100%;
-    overflow-x:auto;
-  }
-
-  td{
-    white-space: nowrap;
-    padding-right: 16px!important;
   }

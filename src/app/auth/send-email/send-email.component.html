@@ -1,6 +1,6 @@
 <div >
   <h3>Wachtwoord vergeten</h3>
-  <form [formGroup]="emailForm" fxLayout="column" (ngSubmit)="submit()">
+  <form [formGroup]="emailForm" fxLayout="column" fxLayoutGap="12px" (ngSubmit)="submit()">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input type="email" matInput formControlName="email">
@@ -8,7 +8,11 @@
       <mat-error *ngIf="emailForm.controls.email.errors?.required">Verplicht veld</mat-error>
       <mat-error *ngIf="emailForm.controls.email.errors?.pattern">Geen geldig e-mailadres</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!emailForm.valid">Verstuur</button>
+    <div fxLayout fxLayoutGap="16px" fxLayoutAlign="center">
+      <button mat-raised-button color="accent" mat-dialog-close>Annuleer</button>
+      <button mat-raised-button color="primary" mat-dialog-close type="submit" [disabled]="!emailForm.valid">Verstuur</button>
+    </div>
+
   </form>
 </div>
 

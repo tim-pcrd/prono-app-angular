@@ -14,7 +14,11 @@
         <mat-icon matListIcon>logout</mat-icon>
         <span>Uitloggen</span>
       </a>
-
+      <a mat-list-item [routerLink]="'/prono'" routerLinkActive="active" (click)="sidenav.toggle()">Mijn prono</a>
+      <a mat-list-item [routerLink]="'/prono/klassement'" routerLinkActive="active" (click)="sidenav.toggle()">
+        <mat-icon matListIcon>format_list_numbered</mat-icon>
+        <span>Klassement</span>
+      </a>
       <a mat-list-item [routerLink]="'/admin/ploegen'" routerLinkActive="active" (click)="sidenav.toggle()">Ploegen </a>
       <a mat-list-item [routerLink]="'/admin/wedstrijden'" routerLinkActive="active" (click)="sidenav.toggle()">Wedstrijden </a>
     </mat-nav-list>

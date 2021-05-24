@@ -1,0 +1,35 @@
+<div >
+  <h3>{{data.date | date: ' dd/MM/yyyy H:mm'}}</h3>
+  <form [formGroup]="pronoForm" fxLayout="column" fxLayoutGap="16px" (ngSubmit)="submit()">
+    <div fxLayout="column" fxLayoutGap="6px">
+      <span fxLayout fxLayoutGap="10px" fxLayoutAlign="start center">
+        <img [src]="data.homeTeam.url" style="height:25px;width:25px;">
+        <span>{{data.homeTeam.name}}</span>
+      </span>
+      <mat-form-field appearance="outline">
+        <mat-label>Score thuisploeg</mat-label>
+        <input type="number" matInput formControlName="homeTeamScore">
+        <mat-error *ngIf="pronoForm.controls.homeTeamScore.errors?.required">Verplicht veld</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayoutGap="6px">
+      <span fxLayout fxLayoutGap="10px" fxLayoutAlign="start center">
+        <img [src]="data.awayTeam.url" style="height:25px;width:25px;">
+        <span>{{data.awayTeam.name}}</span>
+      </span>
+      <mat-form-field appearance="outline">
+        <mat-label>Score uitploeg</mat-label>
+        <input type="number" matInput formControlName="awayTeamScore">
+        <mat-error *ngIf="pronoForm.controls.awayTeamScore.errors?.required">Verplicht veld</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div fxLayout fxLayoutGap="16px" fxLayoutAlign="center">
+      <button mat-raised-button color="accent" mat-dialog-close>Annuleer</button>
+      <button mat-raised-button color="primary" mat-dialog-close type="submit" [disabled]="!pronoForm.valid">Verstuur</button>
+    </div>
+
+  </form>
+</div>
+

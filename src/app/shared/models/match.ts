@@ -1,3 +1,4 @@
+import { IProno } from "./prono";
 import { ITeam } from "./team";
 
 export interface IMatch {
@@ -10,6 +11,7 @@ export interface IMatch {
   homeTeamScore?: number;
   awayTeamScore?: number;
   stage: string;
+  prono?: IProno;
 }
 
 export enum Stage {

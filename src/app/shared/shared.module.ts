@@ -9,6 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -25,7 +26,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTooltipModule
   ]
 })
 export class SharedModule { }
