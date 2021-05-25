@@ -40,8 +40,8 @@
         <th mat-header-cell *matHeaderCellDef>Prono  </th>
         <td mat-cell *matCellDef="let element">
           <div fxLayout="column" fxLayoutGap="18px" style="padding-left:8px;">
-            <span>{{element.homeTeamScore}}</span>
-            <span>{{element.awayTeamScore}}</span>
+            <span>{{element.prono?.homeTeamScore}}</span>
+            <span>{{element.prono?.awayTeamScore}}</span>
           </div>
         </td>
       </ng-container>
@@ -54,7 +54,7 @@
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <ng-container *ngIf="element.date > dateNow" >
+          <ng-container >
             <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
             matTooltip="Score invullen" matTooltipPosition="left" (click)="openScore(element)">
             <mat-icon>edit</mat-icon>

@@ -20,15 +20,22 @@ export class PronoService {
     private authService: AuthService) { }
 
   createProno(prono: IProno) {
-    this.fireStore.collection('prono').add(prono)
-      .then(x => {
-        this.router.navigateByUrl('/admin/wedstrijden');
-        this.toastrService.success('Succesvol opgeslagen.');
-      })
-      .catch(error => {
-        console.log(error);
-        this.toastrService.error('Er is een fout opgetreden.');
-      });
+    return this.fireStore.collection('pronos').add(prono)
+
+  }
+
+  private checkDuplicateData(prono: IProno) {
+    return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', prono.userId)).valueChanges({idField: 'id'})
+      .pipe(
+        map(pronos => {
+          return (pronos as IProno[]).find(p => p.userId === prono.userId);
+        })
+      ).toPromise();
+  }
+
+  editProno(prono: IProno) {
+    const {id, ...pronoToUpdate} = prono;
+    return this.fireStore.collection('pronos').doc(id).update(pronoToUpdate);
   }
 
   getMyPronos(userId): Observable<IProno[]> {
