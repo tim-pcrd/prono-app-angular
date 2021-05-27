@@ -53,9 +53,11 @@ table {
 
   .table-small {
 
+
     td{
       padding:10px 8px;
       position:relative;
+      cursor:pointer;
 
       span.points {
         position:absolute;

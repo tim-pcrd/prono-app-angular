@@ -6,12 +6,15 @@ import { Observable, of } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { IProno } from '../shared/models/prono';
+import { IUser } from '../shared/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PronoService {
   myPronos: IProno[] = [];
+  allPronos: IProno[] = [];
+  allPlayers: IUser[] = [];
 
   constructor(
     private fireStore: AngularFirestore,
@@ -46,15 +49,58 @@ export class PronoService {
 
   }
 
+
+
   private getMyPronosFromDb(userId: string) {
     return this.fireStore.collection('pronos', ref => ref.where('userId', '==', userId))
       .valueChanges({idField: 'id'}).pipe(
         take(1),
         map(pronos => {
+          console.log(pronos);
           this.myPronos = pronos as IProno[];
-          return this.myPronos;
+          return [...this.myPronos];
         })
       )
+  }
+
+  getPronosWithScores() {
+    if (this.allPronos.length > 0){
+      return of([...this.allPronos]);
+    }
+
+    return this.getPronosWithScoresFromDb();
+  }
+
+  getPronosWithScoresFromDb() {
+    return this.fireStore.collection('pronos', ref => ref.where('points', '!=', null)).valueChanges({idField: 'id'})
+      .pipe(
+        take(1),
+        map(pronos => {
+          console.log(pronos);
+          this.allPronos = pronos as IProno[];
+          return [...this.allPronos];
+        })
+      );
+  }
+
+  getPlayers() {
+    if (this.allPlayers.length > 0) {
+      return of([...this.allPlayers]);
+    }
+
+    return this.getPlayersFromDb();
+  }
+
+  getPlayersFromDb() {
+    return this.fireStore.collection('users').valueChanges({idField: 'id'})
+      .pipe(
+        take(1),
+        map(users => {
+          this.allPlayers = users as IUser[];
+          return [...this.allPlayers];
+        })
+      );
+
   }
 
 

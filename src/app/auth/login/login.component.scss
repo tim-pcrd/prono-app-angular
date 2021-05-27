@@ -11,9 +11,10 @@ mat-card{
     font-size: 0.8rem;
 
 
-    &:visited {
+    &:visited, &:active {
       color:white;
     }
+
 
     &:hover {
       color: $primary;

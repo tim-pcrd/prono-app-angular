@@ -6,6 +6,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { take, map, skip, tap } from 'rxjs/operators';
 import { Group, ITeam } from 'src/app/shared/models/team';
 import * as _ from 'lodash';
+import { JsonpClientBackend } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,15 @@ export class TeamService {
   }
 
   getAllTeams() : Observable<ITeam[]> {
+
     if (this.teams.length === 0){
+      const teamsFromLocalStorage : ITeam[] = JSON.parse(localStorage.getItem('teams'));
+      if (teamsFromLocalStorage?.length > 0) {
+        this.teams = teamsFromLocalStorage;
+        console.log('teams from localstorage');
+        console.log(this.teams);
+        return of([...this.teams]);
+      }
 
       return this.getTeamsFromDb();
     }
@@ -54,6 +63,8 @@ export class TeamService {
       take(1),
       map((teams: any[]) => {
         this.teams = _.orderBy(teams, ['group', 'name']);
+        localStorage.setItem('teams', JSON.stringify(this.teams));
+        console.log('teams from db');
         console.log(this.teams);
         this.teamListener();
         return [...this.teams];
