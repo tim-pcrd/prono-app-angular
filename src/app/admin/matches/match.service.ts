@@ -7,6 +7,8 @@ import { map, take, tap, skip, catchError } from 'rxjs/operators';
 import { IMatch } from 'src/app/shared/models/match';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
+import { PronoService } from 'src/app/prono/prono.service';
+import { IProno } from 'src/app/shared/models/prono';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,10 @@ export class MatchService {
   private sub: Subscription;
 
 
-  constructor(private fireStore: AngularFirestore, private router: Router, private toastrService: ToastrService) { }
+  constructor(
+    private fireStore: AngularFirestore,
+    private router: Router,
+    private toastrService: ToastrService) { }
 
   createMatch(match: IMatch) {
     this.fireStore.collection('matches').add(match)
@@ -36,6 +41,31 @@ export class MatchService {
     this.fireStore.collection('matches').doc(id).update(matchToUpdate)
       .then(x => {
         console.log(x);
+        if (matchToUpdate.homeTeamScore != null && matchToUpdate.awayTeamScore != null) {
+          return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', id))
+            .valueChanges({idField: 'id'})
+            .pipe(take(1))
+            .toPromise();
+        } else {
+          return null;
+        }
+      })
+      .then(pronos => {
+        if (pronos) {
+          const promiseArr = [];
+          for(const prono of pronos) {
+            const points = this.getPoints(matchToUpdate, prono as IProno);
+            console.log(points);
+            const _prono = {...prono, points};
+            const {id, ...pronoToUpdate} = _prono;
+            promiseArr.push(this.fireStore.collection('pronos').doc(id).update(pronoToUpdate))
+          }
+          return Promise.all(promiseArr);
+        } else {
+          return null;
+        }
+      })
+      .then(() => {
         this.router.navigateByUrl('/admin/wedstrijden');
         this.toastrService.success('Succesvol opgeslagen.');
       })
@@ -102,6 +132,41 @@ export class MatchService {
   clearMatchService() {
     this.matches = [];
     this.sub?.unsubscribe();
+  }
+
+  getPoints(match: IMatch, prono: IProno) {
+    if (
+      match.homeTeamScore != null && match.awayTeamScore != null
+      && prono.homeTeamScore != null && prono.awayTeamScore != null) {
+        const ht = match.homeTeamScore;
+        const at = match.awayTeamScore;
+        const pht = prono.homeTeamScore;
+        const pat = prono.awayTeamScore;
+
+        if ((ht === pht) && (at === pat)) {
+          return 5;
+        }
+
+        if(((ht === 0) && (at === 0) && (pht > 0) && (pat > 0) && (pht-pat === 0))
+         || ((pht === 0) && (pat === 0) && (ht > 0) && (at > 0) && (ht-at === 0)) ) {
+          return 1;
+        }
+
+
+        if ((ht - at) === (pht - pat)) {
+          return 2;
+        }
+
+        if (((ht-at > 1) && (pht - pat > 1)) || ((ht-at < -1) && (pht - pat < -1))) {
+          return 2;
+        }
+
+        if (((ht-at >= 1) && (pht - pat >= 1)) || ((ht-at <= -1) && (pht - pat <= -1))) {
+          return 1;
+        }
+
+        return 0;
+    }
   }
 
 

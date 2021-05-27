@@ -45,7 +45,8 @@ export class EditScoreComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.pronoForm.valid) {
-      let prono: IProno = {...this.pronoForm.value, matchId: this.data.id}
+      let prono: IProno = {...this.pronoForm.value, matchId:this.data.id};
+
       if (this.data.prono) {
         console.log('update');
         prono.id = this.data.prono.id;

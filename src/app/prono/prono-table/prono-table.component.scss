@@ -26,6 +26,63 @@ table {
       background: rgb(77, 77, 77);
     }
 
+    span.points {
+      font-size:1.3rem;
+      padding: 6px;
+      border-radius: 12px;
+      text-align: center;
+      color:black;
+    }
+
+    .bronze {
+      background-color:#CD7F32;
+    }
+    .silver{
+      background-color:#c0c0c0;
+    }
+    .gold {
+      background-color:#ffd700;
+    }
+    .white {
+      background-color: white;
+    }
+
+
+
+  }
+
+  .table-small {
+
+    td{
+      padding:10px 8px;
+      position:relative;
+
+      span.points {
+        position:absolute;
+        bottom: 12px;
+        left:12px;
+        // font-size:1.3rem;
+        // padding: 6px;
+        // border-radius: 12px;
+        // text-align: center;
+        // color:black;
+        width:25px;
+      }
+
+      .bronze {
+        background-color:#CD7F32;
+      }
+      .silver{
+        background-color:#c0c0c0;
+      }
+      .gold {
+        background-color:#ffd700;
+      }
+      .white {
+        background-color: white;
+      }
+    }
+
   }
 
   mat-card-header {

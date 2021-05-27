@@ -1,11 +1,10 @@
 
 
-    <table mat-table [dataSource]="matches" class="mat-elevation-z8">
-
+    <table mat-table [dataSource]="matches" class="mat-elevation-z8 " fxHide.xs="true">
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Datum en uur </th>
         <td mat-cell *matCellDef="let element">
-            <span>{{element.date | date: ' dd/MM/yyyy H:mm'}}</span>
+            <span>{{element.date | date: ' dd/MM/yyyy H:mm'}} u.</span>
         </td>
       </ng-container>
 
@@ -28,7 +27,7 @@
       </ng-container>
 
       <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef>Score </th>
+        <th mat-header-cell *matHeaderCellDef>Uitslag </th>
         <td mat-cell *matCellDef="let element">
           <div fxLayout="column" fxLayoutGap="18px" style="padding-left:8px;">
             <span>{{element.homeTeamScore}}</span>
@@ -37,9 +36,9 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="prono">
-        <th mat-header-cell *matHeaderCellDef>Prono  </th>
+        <th mat-header-cell *matHeaderCellDef>Mijn prono  </th>
         <td mat-cell *matCellDef="let element">
-          <div fxLayout="column" fxLayoutGap="18px" style="padding-left:8px;">
+          <div fxLayout="column" fxLayoutGap="18px" style="padding-left:16px;">
             <span>{{element.prono?.homeTeamScore}}</span>
             <span>{{element.prono?.awayTeamScore}}</span>
           </div>
@@ -48,7 +47,11 @@
       <ng-container matColumnDef="points">
         <th mat-header-cell *matHeaderCellDef>Punten  </th>
         <td mat-cell *matCellDef="let element">
-          <span style="padding-left:8px;font-size: 1.1rem;">{{element.prono?.points}}</span>
+          <!-- <span style="padding-left:8px;font-size: 1.1rem;">{{element.prono?.points}}</span> -->
+          <span *ngIf="element.prono?.points != null" class="points"
+          [ngClass]="{'white': element.prono?.points === 0,'bronze': element.prono?.points === 1, 'silver': element.prono?.points === 2, 'gold': element.prono?.points === 5}">
+            {{element.prono?.points}}
+          </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="edit">
@@ -63,35 +66,63 @@
 
         </td>
       </ng-container>
-      <!-- <ng-container matColumnDef="awayTeam">
-        <th mat-header-cell *matHeaderCellDef> Uitploeg </th>
-        <td mat-cell *matCellDef="let element">
-          <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
-            <img [src]="element.awayTeam.url" style="height:25px; width:25px;">
-            <span>{{element.awayTeam.name}}</span>
-          </div>
-        </td>
-      </ng-container> -->
-
-
-      <!-- <ng-container matColumnDef="group">
-        <th mat-header-cell *matHeaderCellDef> Uitploeg </th>
-        <td mat-cell *matCellDef="let element"> {{element.group}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <div fxLayout fxLayoutAlign="end">
-            <button>hello</button>
-          </div>
-            </td>
-      </ng-container>
- -->
 
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+
+
+
+    <table mat-table [dataSource]="matches" class="mat-elevation-z8 table-small" fxHide.xs="false" fxHide.gt-xs="true">
+      <ng-container matColumnDef="all">
+        <th mat-header-cell *matHeaderCellDef> Ploegen </th>
+        <td mat-cell *matCellDef="let element">
+          <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="start center">
+            <span>{{element.date | date: 'EE dd/MM/yyyy H:mm'}} u.</span>
+
+            <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+              <img [src]="element.homeTeam?.url" style="height:25px; width:25px;">
+              <span>{{element.homeTeam?.name}}</span>
+              <span>-</span>
+              <span>{{element.awayTeam?.name}}</span>
+              <img [src]="element.awayTeam?.url" style="height:25px; width:25px;">
+            </div>
+
+            <div fxLayout fxFlexAlign="end" style="padding-top:15px;">
+              <span>Mijn prono:</span>
+              <div fxLayout fxLayoutAlign="center" fxFlex="80px" fxLayoutGap="10px">
+                <span>{{element.prono?.homeTeamScore}}</span>
+                <span>-</span>
+                <span>{{element.prono?.awayTeamScore}}</span>
+              </div>
+            </div>
+            <div fxLayout fxFlexAlign="end">
+              <span>Uitslag:</span>
+              <div fxLayout fxLayoutAlign="center" fxFlex="80px" fxLayoutGap="10px">
+                <span>{{element.homeTeamScore}}</span>
+                <span>-</span>
+                <span>{{element.awayTeamScore}}</span>
+              </div>
+            </div>
+          </div>
+
+          <span *ngIf="element.prono?.points != null" class="points"
+          [ngClass]="{'white': element.prono?.points === 0,'bronze': element.prono?.points === 1, 'silver': element.prono?.points === 2, 'gold': element.prono?.points === 5}">
+            {{element.prono?.points}}
+          </span>
+
+        </td>
+      </ng-container>
+
+
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsSmall"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsSmall;"></tr>
+    </table>
+
 
