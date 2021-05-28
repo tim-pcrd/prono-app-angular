@@ -1,0 +1,35 @@
+
+<mat-dialog-content>
+  <div fxLayout fxLayoutAlign="center" style="padding-bottom:10px;">
+    <span>{{vm?.match?.date | date: 'EE dd/MM/yyyy H:mm'}}</span>
+  </div>
+
+
+  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px" style="padding-bottom:15px;">
+    <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+      <img [src]="vm?.match?.homeTeam?.url" style="height:25px; width:25px;">
+      <span fxFlex="150px">{{vm?.match?.homeTeam?.name}}</span>
+      <span>{{vm?.match?.homeTeamScore}}</span>
+    </div>
+    <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+      <img [src]="vm?.match?.awayTeam?.url" style="height:25px; width:25px;">
+      <span fxFlex="150px">{{vm?.match?.awayTeam?.name}}</span>
+      <span>{{vm?.match?.awayTeamScore}}</span>
+    </div>
+  </div>
+
+  <div fxLayout>
+    <h3 style="margin-bottom:5px;">Prono's:</h3>
+  </div>
+  <div fxLayout="column" fxLayoutGap="5px">
+    <ng-container *ngIf="vm?.pronos">
+      <div fxLayout *ngFor="let prono of vm.pronos" fxLayoutGap="5px"
+      [ngClass]="{'bronze': prono?.points === 1, 'silver': prono?.points === 2, 'gold':prono?.points === 5}">
+        <span fxFlex="100px">{{prono.user?.displayName}}</span>
+        <span>{{prono.homeTeamScore}}</span>
+        <span>-</span>
+        <span>{{prono.awayTeamScore}}</span>
+      </div>
+    </ng-container>
+  </div>
+</mat-dialog-content>

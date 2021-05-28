@@ -1,14 +1,21 @@
-<h3>{{data.player.displayName}}</h3>
-<div fxLayout fxLayoutAlign="end" fxLayoutGap="20px">
+<h3 fxLayout fxLayoutGap="6px" fxLayoutAlign="start center">
+  <mat-icon>person</mat-icon>
+  <span fxFlexAlign="end">{{data.player.displayName}}</span>
+</h3>
+<div fxLayout fxLayoutAlign="start" fxLayoutGap="10px" style="padding-bottom: 10px;font-size: 1.1rem;">
   <span>Punten:</span>
   <span>{{data.points}}</span>
 </div>
-<div fxLayout fxLayoutAlign="end" fxLayoutGap="20px">
+<div fxLayout fxLayoutAlign="start" fxLayoutGap="20px">
   <span>Aantal 5-punters:</span>
   <span>{{data.fivePointers}}</span>
 </div>
-<div fxLayout fxLayoutAlign="end" fxLayoutGap="20px">
+<div fxLayout fxLayoutAlign="start" fxLayoutGap="20px">
   <span>Aantal 2-punters:</span>
   <span>{{data.twoPointers}}</span>
+</div>
+<div fxLayout fxLayoutAlign="start" fxLayoutGap="20px">
+  <span>Aantal 1-punters:</span>
+  <span>{{data.onePointers}}</span>
 </div>
 

@@ -97,8 +97,10 @@ export class MatchService {
         take(1),
         tap(x => console.log(x)),
         map(matches => {
-          this.matchListener();
           this.matches = _.orderBy(matches.map((match:any) => ({...match, date: match.date.toDate()})), ['date']);
+          if(this.matches.length > 0) {
+            this.matchListener();
+          }
           return [...this.matches];
         })
       );

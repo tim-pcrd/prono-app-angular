@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { IMatch, Stage } from 'src/app/shared/models/match';
 import { ITeam } from 'src/app/shared/models/team';
@@ -14,17 +14,19 @@ import { MatchService } from '../match.service';
   templateUrl: './edit-match.component.html',
   styleUrls: ['./edit-match.component.scss']
 })
-export class EditMatchComponent implements OnInit {
+export class EditMatchComponent implements OnInit, OnDestroy {
   matchForm: FormGroup;
   currentMatch: IMatch;
   matchId: string;
   stages = Stage;
   teamsByGroup: any;
+  sub: Subscription;
 
   constructor(private route: ActivatedRoute, private matchService: MatchService) { }
 
+
   ngOnInit(): void {
-    combineLatest([
+    this.sub = combineLatest([
       this.route.data,
       this.route.paramMap
     ])
@@ -74,6 +76,10 @@ export class EditMatchComponent implements OnInit {
       this.matchService.editMatch(matchToCreate);
     }
 
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
 }

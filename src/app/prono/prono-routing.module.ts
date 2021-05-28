@@ -7,10 +7,12 @@ import { TeamsResolver } from '../admin/teams/teams-resolver.service';
 import { RankingComponent } from './ranking/ranking.component';
 import { PronoResolver } from './prono-resolver.service';
 import { PlayersResolver } from './players-resolver.service';
+import { PronoDetailsComponent } from './prono-details/prono-details.component';
 
 const routes: Routes = [
   {path:'', component: PronoComponent, resolve: {matches: MatchesResolver, teams: TeamsResolver}},
-  {path:'klassement', component: RankingComponent, resolve: {pronos: PronoResolver, players: PlayersResolver}}
+  {path:'klassement', component: RankingComponent, resolve: {pronos: PronoResolver, players: PlayersResolver}},
+  {path: ':id', component: PronoDetailsComponent}
 ]
 
 @NgModule({

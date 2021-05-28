@@ -12,7 +12,7 @@ import { RankingDetailsComponent } from './ranking-details/ranking-details.compo
   styleUrls: ['./ranking.component.scss']
 })
 export class RankingComponent implements OnInit {
-  ranking: {player: IUser, points: number, fivePointers: number, twoPointers: number}[] = [];
+  ranking: {player: IUser, points: number, fivePointers: number, twoPointers: number, onePointers: number}[] = [];
   displayedColumns = ['position', 'name', 'points'];
 
   constructor(private route: ActivatedRoute, private dialog: MatDialog) { }
@@ -27,8 +27,9 @@ export class RankingComponent implements OnInit {
     for(const [key, value] of Object.entries(grouping)){
       const fivePointers = (value as IProno[]).filter(x => x.points === 5).length;
       const twoPointers = (value as IProno[]).filter(x => x.points === 2).length;
+      const onePointers = (value as IProno[]).filter(x => x.points === 1).length;
       let points = _.sumBy(value, 'points');
-      _ranking.push({player: players.find(x => x.id == key), points, fivePointers, twoPointers});
+      _ranking.push({player: players.find(x => x.id == key), points, fivePointers, twoPointers, onePointers});
     }
     this.ranking = _.orderBy(_ranking, ['points', 'fivePointers', 'twoPointers'], ['desc', 'desc', 'desc']);
     console.log(this.ranking);

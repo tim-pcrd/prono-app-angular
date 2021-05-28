@@ -8,6 +8,7 @@ import { EditScoreComponent } from './edit-score/edit-score.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { RankingComponent } from './ranking/ranking.component';
 import { RankingDetailsComponent } from './ranking/ranking-details/ranking-details.component';
+import { PronoDetailsComponent } from './prono-details/prono-details.component';
 
 
 
@@ -17,7 +18,8 @@ import { RankingDetailsComponent } from './ranking/ranking-details/ranking-detai
     PronoTableComponent,
     EditScoreComponent,
     RankingComponent,
-    RankingDetailsComponent
+    RankingDetailsComponent,
+    PronoDetailsComponent
   ],
   imports: [
     SharedModule,

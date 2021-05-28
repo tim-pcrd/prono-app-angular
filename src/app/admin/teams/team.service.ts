@@ -66,7 +66,9 @@ export class TeamService {
         localStorage.setItem('teams', JSON.stringify(this.teams));
         console.log('teams from db');
         console.log(this.teams);
-        this.teamListener();
+        if (this.teams.length > 0) {
+          this.teamListener();
+        }
         return [...this.teams];
       })
     );
