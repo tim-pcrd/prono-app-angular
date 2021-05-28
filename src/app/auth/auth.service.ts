@@ -7,6 +7,7 @@ import { EMPTY, Observable, of, ReplaySubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { MatchService } from '../admin/matches/match.service';
 import { TeamService } from '../admin/teams/team.service';
+import { PronoService } from '../prono/prono.service';
 import { IUser } from '../shared/models/user';
 
 @Injectable({
@@ -22,7 +23,8 @@ export class AuthService {
     private toastrService: ToastrService,
     private router: Router,
     private matchService: MatchService,
-    private teamService: TeamService) { }
+    private teamService: TeamService,
+    private pronoService: PronoService) { }
 
   register(name: string, email: string, password: string) {
     this.afAuth.createUserWithEmailAndPassword(email, password)
@@ -44,6 +46,7 @@ export class AuthService {
         return this.getUser(x.user.uid);
       })
       .then(user => {
+        console.log(user);
         this.currentUserSource.next(user as IUser);
         this.router.navigateByUrl(returnUrl);
         this.toastrService.success('Login succesvol');
@@ -58,6 +61,7 @@ export class AuthService {
       .then(x => {
         this.teamService.clearTeamService();
         this.matchService.clearMatchService();
+        this.pronoService.clearPronoService();
         this.currentUserSource.next(null);
         this.router.navigateByUrl('/auth/login');
         this.toastrService.success('Succesvol uitgelogd.')
@@ -104,7 +108,7 @@ export class AuthService {
 
 
   private createUser(uid: string, displayName: string) {
-    return this.fireStore.collection('users').doc(uid).set({id: uid, displayName, displayName_lowercase: displayName.toLowerCase()})
+    return this.fireStore.collection('users').doc(uid).set({displayName, displayName_lowercase: displayName.toLowerCase()})
   }
 
 

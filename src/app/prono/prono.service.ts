@@ -17,10 +17,7 @@ export class PronoService {
   allPlayers: IUser[] = [];
 
   constructor(
-    private fireStore: AngularFirestore,
-    private router: Router,
-    private toastrService: ToastrService,
-    private authService: AuthService) { }
+    private fireStore: AngularFirestore) { }
 
   createProno(prono: IProno) {
     return this.fireStore.collection('pronos').add(prono)
@@ -101,6 +98,12 @@ export class PronoService {
         })
       );
 
+  }
+
+  clearPronoService() {
+    this.myPronos = [];
+    this.allPlayers = [];
+    this.allPronos = [];
   }
 
 

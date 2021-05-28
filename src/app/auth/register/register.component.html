@@ -11,6 +11,7 @@
           <mat-icon matSuffix>person</mat-icon>
           <mat-error *ngIf="registerForm.controls.name.errors?.required">Verplicht veld</mat-error>
           <mat-error *ngIf="registerForm.controls.name.errors?.nameExists">Deze naam is al in gebruik</mat-error>
+          <mat-error *ngIf="registerForm.controls.name.errors?.maxlength">Naam mag maximaal 20 tekens bevatten</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
