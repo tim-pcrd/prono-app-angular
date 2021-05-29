@@ -1,9 +1,17 @@
 <mat-tab-group mat-align-tabs="start">
   <mat-tab label="Groepsfase">
-    <app-prono-table [matches]='matchesWithTeamsAndPronos'></app-prono-table>
+    <app-prono-table  [matches]="groupMatches"></app-prono-table>
   </mat-tab>
-  <mat-tab label="Achtste finales">Content 2</mat-tab>
-  <mat-tab label="Kwartfinales">Content 3</mat-tab>
-  <mat-tab label="Halve finales">Content 3</mat-tab>
-  <mat-tab label="Finale">Content 3</mat-tab>
+  <mat-tab label="Achtste finales">
+    <app-prono-table [matches]="roundOf16Matches"></app-prono-table>
+  </mat-tab>
+  <mat-tab label="Kwartfinales">
+    <app-prono-table [matches]="quarterFinalMatches"></app-prono-table>
+  </mat-tab>
+  <mat-tab label="Halve finales">
+    <app-prono-table [matches]="semiFinalMatches"></app-prono-table>
+  </mat-tab>
+  <mat-tab label="Finale">
+    <app-prono-table [matches]="finalMatches"></app-prono-table>
+  </mat-tab>
 </mat-tab-group>

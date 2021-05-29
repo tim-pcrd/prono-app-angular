@@ -71,6 +71,8 @@
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!matchForm.valid">Opslaan</button>
+        <button mat-raised-button color="warn" type="button" holdable (holdTime)="holdHandler($event)">Verwijderen</button>
+        <mat-progress-bar mode="determinate" color="warn" [value]="deleteProgress"></mat-progress-bar>
       </div>
 
     </form>

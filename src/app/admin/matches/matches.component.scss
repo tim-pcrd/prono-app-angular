@@ -29,3 +29,11 @@ table {
     white-space: nowrap;
     padding-right: 16px!important;
   }
+
+  tr{
+    cursor:pointer;
+
+    &:hover {
+      background: rgb(77, 77, 77);
+    }
+  }

@@ -75,6 +75,30 @@ export class MatchService {
       });
   }
 
+  deleteMatch(id: string) {
+    this.fireStore.collection('pronos', ref => ref.where('matchId', '==', id)).valueChanges({idField: 'id'})
+      .pipe(take(1))
+      .toPromise()
+      .then((pronos) => {
+        var batch = this.fireStore.firestore.batch();
+
+        for (const prono of pronos) {
+          batch.delete(this.fireStore.firestore.collection('pronos').doc(prono.id));
+          console.log(prono);
+        }
+        batch.delete(this.fireStore.firestore.collection('matches').doc(id))
+        return batch.commit()
+      })
+      .then(() => {
+        this.toastrService.success('Succesvol verwijderd.');
+        this.router.navigateByUrl('/admin/wedstrijden');
+      })
+      .catch(error => {
+        console.log(error);
+        this.toastrService.error('Er is een fout opgetreden');
+      });
+  }
+
   getMatchById(id: string): Observable<IMatch> {
     return this.getAllMatches().pipe(
       map(matches => {

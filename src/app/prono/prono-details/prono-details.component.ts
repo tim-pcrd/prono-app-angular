@@ -9,6 +9,7 @@ import { IMatch } from 'src/app/shared/models/match';
 import { IProno } from 'src/app/shared/models/prono';
 import { EditScoreComponent } from '../edit-score/edit-score.component';
 import { PronoService } from '../prono.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-prono-details',
@@ -35,9 +36,10 @@ export class PronoDetailsComponent implements OnInit, OnDestroy {
       this.pronoService.getPlayers()
     ]).subscribe(([pronos, players]) => {
       const match = {...this.data};
-      const pronosWithPlayers = pronos.map(prono => {
+      let pronosWithPlayers = pronos.map(prono => {
         return {...prono, user: players.find(x => x.id === prono.userId)}
       });
+      pronosWithPlayers = _.orderBy(pronosWithPlayers, 'user.displayName');
       this.vm = {match, pronos: pronosWithPlayers};
       console.log(this.vm);
     });

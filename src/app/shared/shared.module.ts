@@ -10,9 +10,13 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { HoldableDirective } from './directives/holdable.directive';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HoldableDirective
+  ],
   imports: [
     CommonModule
   ],
@@ -27,7 +31,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTableModule,
     MatIconModule,
     FlexLayoutModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+    MatProgressBarModule,
+    HoldableDirective
+  ],
+
 })
 export class SharedModule { }

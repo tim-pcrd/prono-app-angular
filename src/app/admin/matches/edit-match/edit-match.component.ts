@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, forkJoin, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { IMatch, Stage } from 'src/app/shared/models/match';
@@ -21,8 +21,9 @@ export class EditMatchComponent implements OnInit, OnDestroy {
   stages = Stage;
   teamsByGroup: any;
   sub: Subscription;
+  deleteProgress:number = 0;
 
-  constructor(private route: ActivatedRoute, private matchService: MatchService) { }
+  constructor(private route: ActivatedRoute, private matchService: MatchService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -75,7 +76,19 @@ export class EditMatchComponent implements OnInit, OnDestroy {
       const matchToCreate = {...this.matchForm.value, date: this.matchForm.value.date.toDate(), id: this.matchId}
       this.matchService.editMatch(matchToCreate);
     }
+  }
 
+  holdHandler(e) {
+    console.log(e);
+    this.deleteProgress = (e / 10);
+    if (this.deleteProgress > 100) {
+      this.delete();
+    }
+
+  }
+
+  delete() {
+    this.matchService.deleteMatch(this.currentMatch.id);
   }
 
   ngOnDestroy(): void {

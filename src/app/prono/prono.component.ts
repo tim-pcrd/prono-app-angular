@@ -1,7 +1,7 @@
 import { getSupportedInputTypes } from '@angular/cdk/platform';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { IMatch, Stage } from '../shared/models/match';
@@ -16,6 +16,11 @@ import { PronoService } from './prono.service';
   styleUrls: ['./prono.component.scss']
 })
 export class PronoComponent implements OnInit, OnDestroy {
+  groupMatches: IMatch[];
+  roundOf16Matches: IMatch[];
+  quarterFinalMatches: IMatch[];
+  semiFinalMatches: IMatch[];
+  finalMatches: IMatch[];
   matchesWithTeamsAndPronos: IMatch[];
   user: IUser;
   userSub: Subscription;
@@ -38,14 +43,32 @@ export class PronoComponent implements OnInit, OnDestroy {
         const awayTeam = teams.find(x => x.id === match.awayTeamId);
         const prono = pronos.find(x => x.userId === this.user.id && x.matchId === match.id);
         return {...match, homeTeam, awayTeam,  prono: prono}
-      })
+      });
+
       console.log(this.matchesWithTeamsAndPronos);
+
+      this.groupMatches = this.getMatchesByStage('1');
+      this.roundOf16Matches = this.getMatchesByStage('2');
+      this.quarterFinalMatches = this.getMatchesByStage('3');
+      this.semiFinalMatches = this.getMatchesByStage('4');
+      this.finalMatches = this.getMatchesByStage('5');
+
     });
   }
+
+  private getMatchesByStage(stage: string) {
+    return this.matchesWithTeamsAndPronos.filter(x => x.stage === stage);
+  }
+
+
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
+
+
+
+
 
 
 
