@@ -37,57 +37,44 @@ export class MatchService {
 
   editMatch(match: IMatch) {
     const {id, ...matchToUpdate} = match;
-    console.log(id);
-    this.fireStore.collection('matches').doc(id).update(matchToUpdate)
-      .then(x => {
-        console.log(x);
-        if (matchToUpdate.homeTeamScore != null && matchToUpdate.awayTeamScore != null) {
-          return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', id))
-            .valueChanges({idField: 'id'})
-            .pipe(take(1))
-            .toPromise();
-        } else {
-          return null;
-        }
-      })
+
+    this.pronosByMatchIdPromise(id)
       .then(pronos => {
-        if (pronos) {
-          const promiseArr = [];
-          for(const prono of pronos) {
+        let batch = this.fireStore.firestore.batch();
+
+        if (matchToUpdate.homeTeamScore != null && matchToUpdate.awayTeamScore != null) {
+          for (const prono of pronos) {
             const points = this.getPoints(matchToUpdate, prono as IProno);
-            console.log(points);
             const _prono = {...prono, points};
             const {id, ...pronoToUpdate} = _prono;
-            promiseArr.push(this.fireStore.collection('pronos').doc(id).update(pronoToUpdate))
+            batch.update(this.fireStore.firestore.collection('pronos').doc(id), pronoToUpdate);
           }
-          return Promise.all(promiseArr);
-        } else {
-          return null;
         }
+
+        batch.update(this.fireStore.firestore.collection('matches').doc(id),matchToUpdate);
+
+        return batch.commit();
       })
       .then(() => {
-        this.router.navigateByUrl('/admin/wedstrijden');
-        this.toastrService.success('Succesvol opgeslagen.');
+        this.toastrService.success('Succesvol geüpdatet');
       })
       .catch(error => {
         console.log(error);
         this.toastrService.error('Er is een fout opgetreden');
-      });
+      })
   }
 
   deleteMatch(id: string) {
-    this.fireStore.collection('pronos', ref => ref.where('matchId', '==', id)).valueChanges({idField: 'id'})
-      .pipe(take(1))
-      .toPromise()
+    this.pronosByMatchIdPromise(id)
       .then((pronos) => {
-        var batch = this.fireStore.firestore.batch();
+        let batch = this.fireStore.firestore.batch();
 
         for (const prono of pronos) {
           batch.delete(this.fireStore.firestore.collection('pronos').doc(prono.id));
           console.log(prono);
         }
         batch.delete(this.fireStore.firestore.collection('matches').doc(id))
-        return batch.commit()
+        return batch.commit();
       })
       .then(() => {
         this.toastrService.success('Succesvol verwijderd.');
@@ -155,12 +142,20 @@ export class MatchService {
       }));
   }
 
+
   clearMatchService() {
     this.matches = [];
     this.sub?.unsubscribe();
   }
 
-  getPoints(match: IMatch, prono: IProno) {
+  private pronosByMatchIdPromise(matchId: string) {
+    return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', matchId))
+      .valueChanges({idField: 'id'})
+      .pipe(take(1))
+      .toPromise();
+  }
+
+  private getPoints(match: IMatch, prono: IProno) {
     if (
       match.homeTeamScore != null && match.awayTeamScore != null
       && prono.homeTeamScore != null && prono.awayTeamScore != null) {
@@ -193,6 +188,8 @@ export class MatchService {
 
         return 0;
     }
+
+    return -1;
   }
 
 

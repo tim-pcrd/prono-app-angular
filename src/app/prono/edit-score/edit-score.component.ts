@@ -71,7 +71,6 @@ export class EditScoreComponent implements OnInit, OnDestroy {
           this.toastrService.error('Er is een fout opgetreden.');
         });
       }
-
     }
 
 

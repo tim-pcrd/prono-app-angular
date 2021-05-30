@@ -18,7 +18,7 @@
           <mat-error >Verplicht veld</mat-error>
         </mat-form-field>
 
-        <img [src]="imgURL" style="width: 150px;height:150px;" *ngIf="imgURL" fxFlexAlign="center">
+        <img [src]="imgURL" style="width: 128px;height:128px;" *ngIf="imgURL" fxFlexAlign="center">
         <input #imageInput hidden="true" type="file" onclick="this.value=null" (change)="imageChange($event)" accept="image/*"/>
         <button type="button" mat-flat-button color="accent"  (click)="imageInput.click()">Kies een afbeelding</button>
         <br>

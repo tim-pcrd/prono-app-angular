@@ -22,17 +22,25 @@ export class PronoService {
     private fireStore: AngularFirestore) { }
 
   createProno(prono: IProno) {
-    return this.fireStore.collection('pronos').add(prono)
+    return this.checkDuplicateData(prono)
+      .then(pronos => {
+        console.log(pronos);
+        if (pronos.length === 0) {
+
+          return this.fireStore.collection('pronos').add(prono);
+        }
+        // throw new Error('Prono bestaat reeds');
+        return Promise.reject('Prono bestaat reeds');
+      })
+
 
   }
 
   private checkDuplicateData(prono: IProno) {
-    return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', prono.userId)).valueChanges({idField: 'id'})
-      .pipe(
-        map(pronos => {
-          return (pronos as IProno[]).find(p => p.userId === prono.userId);
-        })
-      ).toPromise();
+    return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', prono.matchId).where('userId','==',prono.userId))
+      .valueChanges({idField: 'id'})
+      .pipe(take(1))
+      .toPromise();
   }
 
   editProno(prono: IProno) {

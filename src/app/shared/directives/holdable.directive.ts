@@ -30,6 +30,7 @@ export class HoldableDirective {
       takeUntil(this.cancel),
       tap(v => {
         this.holdTime.emit(v*n);
+        
       })
     )
     .subscribe();
