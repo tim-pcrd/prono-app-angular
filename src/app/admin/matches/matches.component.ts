@@ -29,7 +29,7 @@ export class MatchesComponent implements OnInit {
   }
 
   openEdit(id: string) {
-    this.router.navigateByUrl(`/admin/wedstrijden/${id}/edit`);
+    this.router.navigateByUrl(`/admin/wedstrijden/${id}`);
   }
 
 }

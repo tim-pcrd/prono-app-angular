@@ -21,7 +21,7 @@ export class EditMatchComponent implements OnInit, OnDestroy {
   stages = Stage;
   teamsByGroup: any;
   sub: Subscription;
-  deleteProgress:number = 0;
+  deleteProgress:number;
 
   constructor(private route: ActivatedRoute, private matchService: MatchService, private router: Router) { }
 
@@ -39,9 +39,12 @@ export class EditMatchComponent implements OnInit, OnDestroy {
       })
     )
     .subscribe(match => {
-      console.log(match)
-      this.currentMatch = match;
-      this.createMatchForm(this.currentMatch);
+      if(!match) {
+        this.router.navigateByUrl('/admin/wedstrijden');
+      } else {
+        this.currentMatch = {...match};
+        this.createMatchForm(this.currentMatch);
+      }
     });
   }
 

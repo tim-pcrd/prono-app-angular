@@ -71,6 +71,7 @@
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!matchForm.valid">Opslaan</button>
+        <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/wedstrijden',currentMatch.id,'pronos']">Prono's</button>
         <button mat-raised-button color="warn" type="button" matTooltip="Houd ingedrukt om te verwijderen" matTooltipPosition="above"
           holdable (holdTime)="holdHandler($event)">Verwijderen</button>
         <mat-progress-bar mode="determinate" color="warn" [value]="deleteProgress"></mat-progress-bar>

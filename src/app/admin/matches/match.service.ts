@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { PronoService } from 'src/app/prono/prono.service';
 import { IProno } from 'src/app/shared/models/prono';
+import { AdminService } from '../admin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class MatchService {
   constructor(
     private fireStore: AngularFirestore,
     private router: Router,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private adminService: AdminService) { }
 
   createMatch(match: IMatch) {
     this.fireStore.collection('matches').add(match)
@@ -89,7 +91,7 @@ export class MatchService {
   getMatchById(id: string): Observable<IMatch> {
     return this.getAllMatches().pipe(
       map(matches => {
-        return {...matches.find(x => x.id === id)}
+        return matches.find(x => x.id === id);
       })
     );
   }
@@ -101,6 +103,25 @@ export class MatchService {
 
     return this.getMatchesFromDb();
   }
+
+
+  getPronosByMatchId(matchId: string) {
+    return this.fireStore.collection('pronos', ref => ref.where('matchId', '==', matchId))
+      .valueChanges({idField: 'id'})
+      .pipe(
+        take(1),
+        map(pronos => {
+          this.adminService.getPlayers().subscribe(players => {
+            for(const prono of (pronos as IProno[])) {
+              prono.user = players.find(x => x.id === prono.userId);
+            }
+          });
+          return pronos as IProno[];
+        })
+      )
+  }
+
+
 
   private getMatchesFromDb() {
     return this.fireStore.collection('matches').valueChanges({idField: 'id'})

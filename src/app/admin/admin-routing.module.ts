@@ -8,6 +8,7 @@ import { TeamsResolver } from './teams/teams-resolver.service';
 import { MatchesResolver } from './matches/matches-resolver.service';
 import { CreateMatchComponent } from './matches/create-match/create-match.component';
 import { EditMatchComponent } from './matches/edit-match/edit-match.component';
+import { MatchPronosComponent } from './matches/match-pronos/match-pronos.component';
 
 const routes: Routes = [
   {path: '', component: AdminComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'ploegen/nieuw', component: CreateTeamComponent},
   {path: 'wedstrijden', component: MatchesComponent, resolve: {matches: MatchesResolver, teams: TeamsResolver}},
   {path: 'wedstrijden/nieuw', component: CreateMatchComponent, resolve: {teams: TeamsResolver}},
-  {path: 'wedstrijden/:id/edit', component: EditMatchComponent, resolve: {teams: TeamsResolver}}
+  {path: 'wedstrijden/:id', component: EditMatchComponent, resolve: {teams: TeamsResolver}},
+  {path: 'wedstrijden/:id/pronos', component: MatchPronosComponent}
 ]
 
 @NgModule({

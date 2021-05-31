@@ -83,7 +83,7 @@
 
     <table mat-table [dataSource]="matches" class="mat-elevation-z8 table-small" fxHide.xs="false" fxHide.gt-xs="true">
       <ng-container matColumnDef="all">
-        <th mat-header-cell *matHeaderCellDef> Ploegen </th>
+        <th mat-header-cell *matHeaderCellDef> wedstrijden </th>
         <td mat-cell *matCellDef="let element" (click)="onOpenClick(element)">
           <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="start center">
             <span>{{element.date | date: 'EE dd/MM/yyyy H:mm'}} u.</span>

@@ -14,7 +14,7 @@ import { IUser } from '../shared/models/user';
 export class PronoService {
   myPronos: IProno[] = [];
   allPronos: IProno[] = [];
-  allPlayers: IUser[] = [];
+
   pronosSub: Subscription;
   myPronosSub: Subscription;
 
@@ -157,31 +157,12 @@ export class PronoService {
       }));
   }
 
-  getPlayers() {
-    if (this.allPlayers.length > 0) {
-      return of([...this.allPlayers]);
-    }
 
-    return this.getPlayersFromDb();
-  }
-
-  getPlayersFromDb() {
-    return this.fireStore.collection('users').valueChanges({idField: 'id'})
-      .pipe(
-        take(1),
-        map(users => {
-          this.allPlayers = users as IUser[];
-          return [...this.allPlayers];
-        })
-      );
-
-  }
 
   clearPronoService() {
     this.pronosSub?.unsubscribe();
     this.myPronosSub?.unsubscribe();
     this.myPronos = [];
-    this.allPlayers = [];
     this.allPronos = [];
   }
 

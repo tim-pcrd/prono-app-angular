@@ -10,6 +10,7 @@ import { IProno } from 'src/app/shared/models/prono';
 import { EditScoreComponent } from '../edit-score/edit-score.component';
 import { PronoService } from '../prono.service';
 import * as _ from 'lodash';
+import { AdminService } from 'src/app/admin/admin.service';
 
 @Component({
   selector: 'app-prono-details',
@@ -25,6 +26,7 @@ export class PronoDetailsComponent implements OnInit, OnDestroy {
     private pronoService: PronoService,
     private matchService: MatchService,
     private teamService: TeamService,
+    private adminService: AdminService,
     private dialogRef: MatDialogRef<EditScoreComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IMatch) { }
 
@@ -33,7 +35,7 @@ export class PronoDetailsComponent implements OnInit, OnDestroy {
     console.log(this.data);
     this.sub = combineLatest([
       this.pronoService.getPronosByMatchId(this.data.id),
-      this.pronoService.getPlayers()
+      this.adminService.getPlayers()
     ]).subscribe(([pronos, players]) => {
       const match = {...this.data};
       let pronosWithPlayers = pronos.map(prono => {
@@ -61,7 +63,7 @@ export class PronoDetailsComponent implements OnInit, OnDestroy {
         return combineLatest([
           this.teamService.getTeamById(match.homeTeamId),
           this.teamService.getTeamById(match.awayTeamId),
-          this.pronoService.getPlayers()
+          this.adminService.getPlayers()
         ])
       })
     ).subscribe(([homeTeam, awayTeam, players]) => {

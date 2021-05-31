@@ -18,6 +18,7 @@ import {
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { EditMatchComponent } from './matches/edit-match/edit-match.component';
+import { MatchPronosComponent } from './matches/match-pronos/match-pronos.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -40,6 +41,7 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     CreateTeamComponent,
     CreateMatchComponent,
     EditMatchComponent,
+    MatchPronosComponent,
 
   ],
   imports: [

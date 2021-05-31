@@ -1,0 +1,13 @@
+<mat-card>
+  <h2>Prono's</h2>
+  <div fxLayout fxLayoutAlign="center">
+    <h3>{{match?.date | date: 'EEEE dd/MM/yyyy H:mm'}} u.</h3>
+  </div>
+  <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center">
+    <h3>{{match?.homeTeam.name}}</h3>
+    <h3>{{match?.homeTeamScore}}</h3>
+    <h3>-</h3>
+    <h3>{{match?.awayTeamScore}}</h3>
+    <h3>{{match?.awayTeam.name}}</h3>
+  </div>
+</mat-card>

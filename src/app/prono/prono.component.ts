@@ -24,6 +24,7 @@ export class PronoComponent implements OnInit, OnDestroy {
   matchesWithTeamsAndPronos: IMatch[];
   user: IUser;
   userSub: Subscription;
+  selectedTab: number;
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private pronoService: PronoService) { }
 
@@ -53,6 +54,8 @@ export class PronoComponent implements OnInit, OnDestroy {
       this.semiFinalMatches = this.getMatchesByStage('4');
       this.finalMatches = this.getMatchesByStage('5');
 
+      this.setSelectedTab();
+
     });
   }
 
@@ -60,7 +63,19 @@ export class PronoComponent implements OnInit, OnDestroy {
     return this.matchesWithTeamsAndPronos.filter(x => x.stage === stage);
   }
 
-
+  private setSelectedTab() {
+    if (this.finalMatches.length > 0) {
+      this.selectedTab = 4;
+    } else if (this.semiFinalMatches.length > 0) {
+      this.selectedTab = 3;
+    } else if (this.quarterFinalMatches.length > 0) {
+      this.selectedTab = 2;
+    } else if (this.roundOf16Matches.length > 0) {
+      this.selectedTab = 1;
+    } else {
+      this.selectedTab = 0;
+    }
+  }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();

@@ -22,7 +22,8 @@ const routes: Routes = [
     path: 'prono',
     canActivate: [AuthGuard],
     loadChildren: () => import('./prono/prono.module').then(m => m.PronoModule)
-  }
+  },
+  {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
 @NgModule({
