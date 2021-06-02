@@ -24,7 +24,8 @@ export class PronoTableComponent implements OnInit {
   openScore(match: IMatch) {
     const dialogRef = this.dialog.open(EditScoreComponent, {
       width: '500px',
-      data:match
+      data:match,
+      disableClose: true
     });
 
   }

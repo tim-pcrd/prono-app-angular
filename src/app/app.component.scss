@@ -1,11 +1,12 @@
-// mat-sidenav-container {
-//   min-height: 100%;
-// }
+@import '../variables';
 
-// mat-sidenav {
-//   max-height: 100vh;
-// }
+h2 {
+  color: $primary;
+}
 
+.admin-link {
+  color: $accent;
+}
 
 mat-toolbar {
   position:fixed;

@@ -48,7 +48,18 @@ export class PronoService {
     return this.fireStore.collection('pronos').doc(id).update(pronoToUpdate);
   }
 
+  updatePronos(prono: IProno) {
+    const index = this.myPronos.findIndex(x => x.id === prono.id);
+    if (index >= 0) {
+      this.myPronos[index] = prono;
+    } else {
+      this.myPronos.push(prono);
+    }
+  }
+
   getMyPronos(userId): Observable<IProno[]> {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(this.myPronos);
     if (this.myPronos.length > 0){
       return of([...this.myPronos]);
     }

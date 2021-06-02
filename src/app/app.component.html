@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <div fxLayout="column">
-      <h2 fxFlexAlign="center" fxFlexOffset="10px" *ngIf="user$ | async as user" style="color:#64b5f6;">Hallo {{user.displayName}}</h2>
+      <h2 fxFlexAlign="center" fxFlexOffset="10px" *ngIf="user$ | async as user" >Hallo {{user.displayName}}</h2>
       <mat-nav-list>
         <a mat-list-item routerLink="/" style="height: 0;"></a>
 
@@ -18,12 +18,12 @@
           <mat-icon matListIcon>format_list_numbered</mat-icon>
           <span>Klassement</span>
         </a>
-        <a *ngIf="(user$ | async)?.roles?.admin" mat-list-item [routerLink]="'/admin/ploegen'" routerLinkActive="active" (click)="sidenav.toggle()">
-          <mat-icon matListIcon>format_list_bulleted</mat-icon>
+        <a *ngIf="(user$ | async)?.roles?.admin" mat-list-item [routerLink]="'/admin/ploegen'" routerLinkActive="active" (click)="sidenav.toggle()" class="admin-link">
+          <mat-icon matListIcon>view_list</mat-icon>
           <span>Ploegen</span>
         </a>
-        <a *ngIf="(user$ | async)?.roles?.admin" mat-list-item [routerLink]="'/admin/wedstrijden'" routerLinkActive="active" (click)="sidenav.toggle()">
-          <mat-icon matListIcon>format_list_bulleted</mat-icon>
+        <a *ngIf="(user$ | async)?.roles?.admin" mat-list-item [routerLink]="'/admin/wedstrijden'" routerLinkActive="active" (click)="sidenav.toggle()" class="admin-link">
+          <mat-icon matListIcon>view_list</mat-icon>
           <span>Wedstrijden</span>
         </a>
 

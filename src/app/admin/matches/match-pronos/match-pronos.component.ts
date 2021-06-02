@@ -6,6 +6,7 @@ import { IMatch } from 'src/app/shared/models/match';
 import { IProno } from 'src/app/shared/models/prono';
 import { TeamService } from '../../teams/team.service';
 import { MatchService } from '../match.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-match-pronos',
@@ -16,6 +17,7 @@ export class MatchPronosComponent implements OnInit {
   pronos: IProno[];
   match: IMatch;
   matchId: string;
+  displayedColumns = ['name', 'prono', 'points']
 
   constructor(private route: ActivatedRoute, private matchService: MatchService, private router: Router, private teamService: TeamService) { }
 

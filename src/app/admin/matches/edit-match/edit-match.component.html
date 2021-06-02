@@ -1,7 +1,9 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Wedstrijd wijzigen</mat-card-title>
-  </mat-card-header>
+    <div fxLayoutAlign.gt-xs="space-between start" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout="column" fxLayout.gt-xs="row">
+      <mat-card-title fxFlexOrder="2" fxFlexOrder.gt-xs="1">Wedstrijd wijzigen</mat-card-title>
+      <button fxFlexOrder="1" fxFlexOrder.gt-xs="2" mat-raised-button color="primary" type="button" [routerLink]="['/admin/wedstrijden']"><mat-icon>arrow_back</mat-icon> Terug</button>
+    </div>
+
   <mat-card-content *ngIf="matchForm">
     <form [formGroup]="matchForm" (ngSubmit)="submit()" fxLayout fxLayoutAlign="center">
       <div fxLayout="column" fxLayoutGap="12px" fxFlex="100%" fxFlex.gt-xs="520px">
@@ -71,10 +73,10 @@
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!matchForm.valid">Opslaan</button>
-        <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/wedstrijden',currentMatch.id,'pronos']">Prono's</button>
         <button mat-raised-button color="warn" type="button" matTooltip="Houd ingedrukt om te verwijderen" matTooltipPosition="above"
           holdable (holdTime)="holdHandler($event)">Verwijderen</button>
         <mat-progress-bar mode="determinate" color="warn" [value]="deleteProgress"></mat-progress-bar>
+        <button mat-raised-button color="accent" type="button" [routerLink]="['/admin/wedstrijden',currentMatch.id,'pronos']">Prono's</button>
       </div>
 
     </form>

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IMatch } from 'src/app/shared/models/match';
 import { IProno } from 'src/app/shared/models/prono';
@@ -28,7 +29,7 @@ export class EditScoreComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.userSub = this.authService.currentUser$.subscribe(user => {
+    this.userSub = this.authService.currentUser$.pipe(take(1)).subscribe(user => {
       this.createPronoForm(user.id);
     })
 
@@ -53,6 +54,7 @@ export class EditScoreComponent implements OnInit, OnDestroy {
         this.pronoService.editProno(prono)
         .then(x => {
           this.data.prono = {...prono};
+          this.pronoService.updatePronos(this.data.prono);
           this.toastrService.success('Succesvol opgeslagen.');
         })
         .catch(error => {
@@ -65,6 +67,7 @@ export class EditScoreComponent implements OnInit, OnDestroy {
         .then(x => {
           this.toastrService.success('Succesvol opgeslagen.');
           this.data.prono = {...prono, id: x.id};
+          this.pronoService.updatePronos(this.data.prono);
         })
         .catch(error => {
           console.log(error);

@@ -27,13 +27,19 @@ export class AuthService {
     private pronoService: PronoService) { }
 
   register(name: string, email: string, password: string) {
+    let uid;
     this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(x => {
+        uid = x.user.uid;
         return this.createUser(x.user.uid, name);
       })
       .then(x => {
+        return this.getUser(uid);
+      })
+      .then(user => {
+        this.currentUserSource.next(user as IUser);
         this.router.navigateByUrl('');
-        this.toastrService.success('Login succesvol');
+        this.toastrService.success('Registratie succesvol');
       })
       .catch(error => {
         this.errorHandling(error);

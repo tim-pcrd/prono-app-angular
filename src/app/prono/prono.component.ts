@@ -2,7 +2,7 @@ import { getSupportedInputTypes } from '@angular/cdk/platform';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { IMatch, Stage } from '../shared/models/match';
 import { IProno } from '../shared/models/prono';
@@ -33,6 +33,7 @@ export class PronoComponent implements OnInit, OnDestroy {
     const teams: ITeam[] = this.route.snapshot.data['teams'];
     const matches: IMatch[] = this.route.snapshot.data['matches'];
     this.userSub = this.authService.currentUser$.pipe(
+      take(1),
       switchMap(user => {
         this.user = user;
         return this.pronoService.getMyPronos(user.id);

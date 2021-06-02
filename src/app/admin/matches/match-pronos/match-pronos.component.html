@@ -1,5 +1,9 @@
 <mat-card>
-  <h2>Prono's</h2>
+  <div fxLayout fxLayoutAlign="space-between start">
+    <h2>Prono's</h2>
+    <button mat-raised-button color="primary" type="button" [routerLink]="['/admin/wedstrijden',matchId]"><mat-icon>arrow_back</mat-icon> Terug</button>
+  </div>
+
   <div fxLayout fxLayoutAlign="center">
     <h3>{{match?.date | date: 'EEEE dd/MM/yyyy H:mm'}} u.</h3>
   </div>
@@ -10,4 +14,30 @@
     <h3>{{match?.awayTeamScore}}</h3>
     <h3>{{match?.awayTeam.name}}</h3>
   </div>
+  <table mat-table [dataSource]="pronos" class="mat-elevation-z8">
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Naam</th>
+      <td mat-cell *matCellDef="let element"> {{element.user?.displayName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="prono">
+      <th mat-header-cell *matHeaderCellDef>Prono</th>
+      <td mat-cell *matCellDef="let element"> {{element.homeTeamScore}} - {{element.awayTeamScore}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="points">
+      <th mat-header-cell *matHeaderCellDef>Punten</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.points > -1">
+          {{element.points}}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
 </mat-card>
