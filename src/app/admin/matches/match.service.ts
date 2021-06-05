@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { AdminService } from '../admin.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MatchService {
+export class MatchService implements OnDestroy {
   private matches: IMatch[] = [];
   private sub: Subscription;
 
@@ -24,6 +24,7 @@ export class MatchService {
     private router: Router,
     private toastrService: ToastrService,
     private adminService: AdminService) { }
+
 
   createMatch(match: IMatch) {
     this.fireStore.collection('matches').add(match)
@@ -211,6 +212,10 @@ export class MatchService {
     }
 
     return -1;
+  }
+
+  ngOnDestroy(): void {
+    this.clearMatchService();
   }
 
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { IUser } from '../shared/models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class PronoService {
+export class PronoService implements OnDestroy {
   myPronos: IProno[] = [];
   allPronos: IProno[] = [];
 
@@ -20,6 +20,7 @@ export class PronoService {
 
   constructor(
     private fireStore: AngularFirestore) { }
+
 
   createProno(prono: IProno) {
     return this.checkDuplicateData(prono)
@@ -132,11 +133,12 @@ export class PronoService {
       .pipe(
         take(1),
         map(pronos => {
+          console.log('pronos met punten');
           console.log(pronos);
           this.allPronos = pronos as IProno[];
-          // if (this.allPronos.length > 0) {
-          //   this.PronosListener();
-          // }
+          if (this.allPronos.length > 0) {
+            this.PronosListener();
+          }
           return [...this.allPronos];
         })
       );
@@ -146,7 +148,10 @@ export class PronoService {
     this.pronosSub = this.fireStore.collection('pronos', ref => ref.where('points', '>', -1)).stateChanges()
       .pipe(
         skip(1),
-        tap(data => console.log(data))
+        tap(data => {
+          console.log('======================= prono listener =================');
+          console.log(data);
+        })
       )
       .subscribe(actions => actions.forEach(x => {
         const id = x.payload.doc.id;
@@ -155,6 +160,10 @@ export class PronoService {
 
         if (x.type === 'added') {
           this.allPronos = [...this.allPronos, prono];
+          const myPronoIndex = this.myPronos.findIndex(x => x.id === id);
+          if (myPronoIndex >= 0) {
+            this.myPronos[myPronoIndex] = prono;
+          }
         } else if(x.type === 'removed') {
           this.allPronos = this.allPronos.filter(x => x.id !== id);
         } else if(x.type === 'modified') {
@@ -164,8 +173,17 @@ export class PronoService {
           } else {
             this.allPronos = [...this.allPronos, prono];
           }
+
+          const myPronoIndex = this.myPronos.findIndex(x => x.id === id);
+          if (myPronoIndex >= 0) {
+            this.myPronos[myPronoIndex] = prono;
+          }
         }
       }));
+  }
+
+  ngOnDestroy(): void {
+    this.clearPronoService();
   }
 
 

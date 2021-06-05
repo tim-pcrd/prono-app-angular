@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
@@ -11,11 +11,12 @@ import { JsonpClientBackend } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
+export class TeamService implements OnDestroy {
   private teams: ITeam[] = [];
   private sub: Subscription;
 
   constructor(private fireStore: AngularFirestore, private storage: AngularFireStorage, private router: Router) { }
+
 
   createTeam(team: ITeam, file) {
     this.storage.upload(file.name, file)
@@ -97,6 +98,10 @@ export class TeamService {
         }
         this.teams = _.orderBy([...this.teams], ['group', 'name']) ;
       }));
+  }
+
+  ngOnDestroy(): void {
+    this.clearTeamService();
   }
 
   clearTeamService() {
