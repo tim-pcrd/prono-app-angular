@@ -43,7 +43,6 @@ export class PronoDetailsComponent implements OnInit, OnDestroy {
       });
       pronosWithPlayers = _.orderBy(pronosWithPlayers, 'user.displayName');
       this.vm = {match, pronos: pronosWithPlayers};
-      console.log(this.vm);
     });
 
   }

@@ -74,7 +74,6 @@ export class MatchService implements OnDestroy {
 
         for (const prono of pronos) {
           batch.delete(this.fireStore.firestore.collection('pronos').doc(prono.id));
-          console.log(prono);
         }
         batch.delete(this.fireStore.firestore.collection('matches').doc(id))
         return batch.commit();
@@ -128,7 +127,10 @@ export class MatchService implements OnDestroy {
     return this.fireStore.collection('matches').valueChanges({idField: 'id'})
       .pipe(
         take(1),
-        tap(x => console.log(x)),
+        tap(x => {
+          console.log('Matches from DB');
+          console.log(x);
+        }),
         map(matches => {
           this.matches = _.orderBy(matches.map((match:any) => ({...match, date: match.date.toDate()})), ['date']);
           if(this.matches.length > 0) {
@@ -143,7 +145,10 @@ export class MatchService implements OnDestroy {
     this.sub = this.fireStore.collection('matches').stateChanges()
       .pipe(
         skip(1),
-        tap(data => console.log(data))
+        tap(data => {
+          console.log('======== match listener ========');
+          console.log(data);
+        })
       )
       .subscribe(actions => actions.forEach(x => {
         const id = x.payload.doc.id;

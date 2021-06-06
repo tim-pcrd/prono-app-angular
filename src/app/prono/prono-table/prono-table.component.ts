@@ -25,7 +25,8 @@ export class PronoTableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditScoreComponent, {
       width: '500px',
       data:match,
-      disableClose: true
+      disableClose: true,
+      backdropClass: 'dialog-background'
     });
 
   }
@@ -34,7 +35,8 @@ export class PronoTableComponent implements OnInit {
   openDetails(match: IMatch) {
     const dialogRef = this.dialog.open(PronoDetailsComponent, {
       width: '500px',
-      data: match
+      data: match,
+      backdropClass: 'dialog-background'
     })
   }
 

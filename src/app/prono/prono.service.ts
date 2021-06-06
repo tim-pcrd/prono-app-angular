@@ -25,12 +25,10 @@ export class PronoService implements OnDestroy {
   createProno(prono: IProno) {
     return this.checkDuplicateData(prono)
       .then(pronos => {
-        console.log(pronos);
         if (pronos.length === 0) {
 
           return this.fireStore.collection('pronos').add(prono);
         }
-        // throw new Error('Prono bestaat reeds');
         return Promise.reject('Prono bestaat reeds');
       })
 
@@ -59,8 +57,6 @@ export class PronoService implements OnDestroy {
   }
 
   getMyPronos(userId): Observable<IProno[]> {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    console.log(this.myPronos);
     if (this.myPronos.length > 0){
       return of([...this.myPronos]);
     }
@@ -68,14 +64,11 @@ export class PronoService implements OnDestroy {
 
   }
 
-
-
   private getMyPronosFromDb(userId: string) {
     return this.fireStore.collection('pronos', ref => ref.where('userId', '==', userId))
       .valueChanges({idField: 'id'}).pipe(
         take(1),
         map(pronos => {
-          console.log(pronos);
           this.myPronos = pronos as IProno[];
           // if (this.myPronos.length > 0) {
           //   this.myPronosListener(userId);

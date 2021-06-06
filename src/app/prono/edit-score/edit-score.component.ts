@@ -32,8 +32,6 @@ export class EditScoreComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.currentUser$.pipe(take(1)).subscribe(user => {
       this.createPronoForm(user.id);
     })
-
-    console.log(this.data);
   }
 
   createPronoForm(userId: string) {
@@ -80,7 +78,7 @@ export class EditScoreComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 
 }

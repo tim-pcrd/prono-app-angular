@@ -14,7 +14,6 @@ export class SpinnerService {
     this.requestCount++;
     this.spinner.show(undefined, {
       type: 'ball-triangle-path',
-      bdColor: 'rgba(0,0,0,0.8)'
     });
   }
 

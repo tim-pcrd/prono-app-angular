@@ -22,7 +22,6 @@ export class RankingComponent implements OnInit {
     const players: IUser[] = this.route.snapshot.data['players'];
 
     const grouping = _.groupBy(pronos, 'userId');
-    console.log(grouping);
     let _ranking = [];
     for(const [key, value] of Object.entries(grouping)){
       const fivePointers = (value as IProno[]).filter(x => x.points === 5).length;
@@ -32,14 +31,14 @@ export class RankingComponent implements OnInit {
       _ranking.push({player: players.find(x => x.id == key), points, fivePointers, twoPointers, onePointers});
     }
     this.ranking = _.orderBy(_ranking, ['points', 'fivePointers', 'twoPointers'], ['desc', 'desc', 'desc']);
-    console.log(this.ranking);
 
   }
 
   openDetails(ranking: any) {
     const dialogRef = this.dialog.open(RankingDetailsComponent, {
       width: '500px',
-      data:ranking
+      data:ranking,
+      backdropClass: 'dialog-background'
     });
   }
 

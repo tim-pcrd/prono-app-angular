@@ -1,15 +1,6 @@
+@import '../../../variables';
+
 table {
-
-
-    // @media only screen and (min-width: 600px) {
-    //   width:80%;
-    //   margin:auto;
-    // }
-
-    // @media only screen and (min-width: 960px) {
-    //   width: 800px;
-    //   margin:auto;
-    // }
 
     width: 100%;
     margin:auto;
@@ -36,11 +27,12 @@ table {
     }
 
     span.points {
-      font-size:1.3rem;
-      padding: 6px;
+      font-size:1.1rem;
+      padding: 4px;
       border-radius: 12px;
       text-align: center;
       color:black;
+      width:25px!important;
     }
 
     .bronze {
@@ -110,3 +102,5 @@ table {
   mat-card-header {
     margin-bottom: 1rem;
   }
+
+

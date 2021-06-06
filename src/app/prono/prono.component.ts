@@ -47,8 +47,6 @@ export class PronoComponent implements OnInit, OnDestroy {
         return {...match, homeTeam, awayTeam,  prono: prono}
       });
 
-      console.log(this.matchesWithTeamsAndPronos);
-
       this.groupMatches = this.getMatchesByStage('1');
       this.roundOf16Matches = this.getMatchesByStage('2');
       this.quarterFinalMatches = this.getMatchesByStage('3');

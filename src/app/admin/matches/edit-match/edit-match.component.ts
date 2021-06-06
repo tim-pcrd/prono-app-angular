@@ -82,7 +82,6 @@ export class EditMatchComponent implements OnInit, OnDestroy {
   }
 
   holdHandler(e) {
-    console.log(e);
     this.deleteProgress = (e / 10);
     if (this.deleteProgress > 100) {
       this.delete();

@@ -21,6 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
 import localeNl from '@angular/common/locales/nl-BE';
 import { registerLocaleData } from '@angular/common';
 import { HomeComponent } from './core/home/home.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import {MatCardModule} from '@angular/material/card';
 
 registerLocaleData(localeNl);
 
@@ -42,12 +44,19 @@ registerLocaleData(localeNl);
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
     FlexLayoutModule,
     NgxSpinnerModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-center',
       preventDuplicates: true,
       progressBar: true
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     })
   ],
   providers: [

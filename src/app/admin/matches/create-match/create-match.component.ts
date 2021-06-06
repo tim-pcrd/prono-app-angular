@@ -48,11 +48,9 @@ export class CreateMatchComponent implements OnInit {
       acc[value.group].push(value);
       return acc;
     }, {})
-    console.log(this.teamsByGroup);
   }
 
   submit() {
-    console.log(this.matchForm.value);
     if (this.matchForm.valid) {
       const matchToCreate = {...this.matchForm.value, date: this.matchForm.value.date.toDate()}
       this.matchService.createMatch(matchToCreate);

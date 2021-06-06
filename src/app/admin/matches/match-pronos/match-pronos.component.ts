@@ -36,7 +36,6 @@ export class MatchPronosComponent implements OnInit {
         this.router.navigateByUrl('/admin/wedstrijden');
       } else {
         this.pronos = pronos;
-        console.log(pronos);
         this.match = {...match};
         this.teamService.getTeamById(this.match.homeTeamId).subscribe(team => {
           this.match.homeTeam = team;

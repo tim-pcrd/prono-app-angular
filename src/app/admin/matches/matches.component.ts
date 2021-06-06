@@ -18,14 +18,12 @@ export class MatchesComponent implements OnInit {
     const teams: ITeam[] = this.route.snapshot.data['teams'];
     const matches: IMatch[] = this.route.snapshot.data['matches'];
 
-    console.log(matches);
 
     this.matchesWithTeams = matches.map((match: IMatch) => {
       const homeTeam = teams.find(x => x.id === match.homeTeamId);
       const awayTeam = teams.find(x => x.id === match.awayTeamId);
       return {...match, homeTeam, awayTeam, stage: Stage[match.stage]}
     })
-    console.log(this.matchesWithTeams);
   }
 
   openEdit(id: string) {
